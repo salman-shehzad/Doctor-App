@@ -1,0 +1,17 @@
+{
+  "name": "doctor-hub",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Doctor Hub MERN healthcare application",
+  "scripts": {
+    "client": "cd client && npm run dev",
+    "server": "cd server && npm run dev",
+    "dev": "concurrently \"npm run server\" \"npm run client\"",
+    "postinstall": "npm install --prefix server && npm install --prefix client",
+    "build": "npm --prefix client run build",
+    "start": "npm --prefix server start"
+  },
+  "devDependencies": {
+    "concurrently": "^9.1.2"
+  }
+}
