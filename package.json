@@ -4,12 +4,13 @@
   "private": true,
   "description": "Doctor Hub MERN healthcare application",
   "scripts": {
-    "client": "cd client && npm run dev",
-    "server": "cd server && npm run dev",
+    "client": "npm --prefix frontend run dev",
+    "server": "npm --prefix backend run dev",
     "dev": "concurrently \"npm run server\" \"npm run client\"",
-    "postinstall": "npm install --prefix server && npm install --prefix client",
-    "build": "npm --prefix client run build",
-    "start": "npm --prefix server start"
+    "postinstall": "npm install --prefix backend && npm install --prefix frontend",
+    "build": "npm --prefix frontend run build",
+    "vercel-build": "npm --prefix frontend run build",
+    "start": "npm --prefix backend start"
   },
   "devDependencies": {
     "concurrently": "^9.1.2"

@@ -33,7 +33,7 @@ Doctor Hub is a full-stack healthcare web application built with React, Express,
 
 ## Local Setup
 
-1. Install all root, server, and client dependencies:
+1. Install all root, backend, and frontend dependencies:
 
 ```bash
 npm install
@@ -50,6 +50,34 @@ npm run dev
 Frontend runs at `http://localhost:5173`. Backend runs at `http://localhost:5000`.
 
 The root `client` and `server` launchers let `npm run dev` start both apps with `concurrently`.
+
+## Vercel Deployment
+
+This project is configured for one Vercel deployment:
+
+- `frontend/` builds to `frontend/dist`
+- `api/index.js` exports the Express app as a Vercel serverless function
+- `backend/app.js` contains the Express routes and middleware without `app.listen()`
+- `backend/server.js` is only for local development
+- `vercel.json` rewrites `/api/*` requests to the serverless Express app and all other routes to the React SPA
+
+On Vercel, add these environment variables in Project Settings:
+
+```env
+MONGO_URI=mongodb+srv://doctor_app:<db_password>@cluster0.x5grltx.mongodb.net/doctor_hub?retryWrites=true&w=majority&appName=Cluster0
+JWT_SECRET=your_strong_jwt_secret
+JWT_EXPIRE=7d
+CLOUDINARY_CLOUD_NAME=your_cloud_name
+CLOUDINARY_API_KEY=your_api_key
+CLOUDINARY_API_SECRET=your_api_secret
+EMAIL_HOST=smtp.gmail.com
+EMAIL_PORT=587
+EMAIL_USER=your_email@gmail.com
+EMAIL_PASS=your_email_app_password
+CLIENT_URL=https://your-vercel-domain.vercel.app
+```
+
+Do not set `VITE_API_URL` on Vercel unless your API is on a different domain. In production, the frontend automatically calls same-origin `/api`, for example `/api/auth/login`.
 
 ## Backend Environment Variables
 
