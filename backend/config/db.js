@@ -12,10 +12,15 @@ const connectDB = async () => {
     throw new Error('MONGO_URI must be a valid MongoDB Atlas connection string');
   }
 
-  cachedPromise = mongoose.connect(uri).then((conn) => {
+  cachedPromise = mongoose.connect(uri, {
+    serverSelectionTimeoutMS: 8000
+  }).then((conn) => {
     cachedConnection = conn.connection;
     console.log(`MongoDB connected: ${conn.connection.host}`);
     return cachedConnection;
+  }).catch((error) => {
+    cachedPromise = null;
+    throw error;
   });
 
   return cachedPromise;
